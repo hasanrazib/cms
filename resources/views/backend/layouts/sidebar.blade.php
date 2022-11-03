@@ -3,7 +3,7 @@
                 <div data-simplebar class="h-100">
 
                     <!-- User details -->
-                
+
 
                     <!--- Sidemenu -->
                     <div id="sidebar-menu">
@@ -23,7 +23,7 @@
                                     <span>Posts</span>
                                 </a>
                                 <ul class="sub-menu" aria-expanded="false">
-                                    <li><a href="#">All Posts</a></li>
+                                    <li><a href="{{route('view.all.posts')}}">All Posts</a></li>
                                     <li><a href="#">Add New</a></li>
                                     <li><a href="#">Categories</a></li>
                                     <li><a href="#">Tags</a></li>
@@ -49,14 +49,14 @@
                                     <li><a href="#">Add New</a></li>
                                 </ul>
                             </li>
-                            
+
                             <li>
                                 <a href="#" class=" waves-effect">
                                     <i class="ri-calendar-2-line"></i>
                                     <span>Comments</span>
                                 </a>
                             </li>
-                
+
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
                                     <i class="ri-mail-send-line"></i>
@@ -67,7 +67,7 @@
                                     <li><a href="#">Add New</a></li>
                                 </ul>
                             </li>
-                            
+
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
                                     <i class="ri-mail-send-line"></i>
@@ -88,7 +88,7 @@
                                     <li><a href="#">All Users</a></li>
                                     <li><a href="#">Add New</a></li>
                                     <li><a href="#">Profile</a></li>
-                                   
+
                                 </ul>
                             </li>
 
@@ -153,10 +153,10 @@
                                 </ul>
                             </li>
 
-                           
 
-                            
-                         
+
+
+
 
                         </ul>
                     </div>

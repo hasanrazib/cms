@@ -1,4 +1,4 @@
-@extends('admin.admin_master')
+@extends('backend.admin_master')
 @section('admin')
 
 <div class="page-content">
@@ -20,16 +20,16 @@
                 <h4 class="card-title">User Name : {{ $adminData->username }} </h4>
                 <hr>
                 <a href="{{ route('edit.profile') }}" class="btn btn-info btn-rounded waves-effect waves-light" > Edit Profile</a>
-                
+
             </div>
         </div>
-    </div> 
-                            
-        
-                        </div> 
+    </div>
+
+
+                        </div>
 
 
 </div>
 </div>
 
-@endsection 
+@endsection
