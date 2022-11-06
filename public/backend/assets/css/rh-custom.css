@@ -9,3 +9,28 @@
     border-radius: 3px;
 
 }
+
+.rh-links {margin-bottom: 15px;}
+.rh-links ul{list-style: none;padding: 0;}
+.rh-links ul li {display: inline-block;}
+.rh-links ul li a{color:#0f9cf3}
+.active{color:#000!important}
+
+.rh-select-wrap {
+	float: left;
+	width: 60%;
+}
+.rh-bttn-wrap {
+	width: 35%;
+	float: left;
+	margin-left: 5%;
+}
+.rh-bttn-wrap .btn-primary {
+	color: #000;
+	background-color: transparent;
+	border-color: #000;
+    padding:7px;
+
+}
+
+

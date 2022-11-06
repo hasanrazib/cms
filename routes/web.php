@@ -18,6 +18,7 @@ Route::controller(PostController::class)->group(function () {
    // Route::get('/district/edit/{id}','editDistrict')->name('edit.district');
    // Route::post('/district/update/','updateDistrict')->name('update.district');
     //Route::get('/district/delete/{id}','deleteDistrict')->name('delete.district');
+    Route::get('/posts/add', 'addPost')->name('add.post');
     Route::get('/posts/all', 'viewAllPost')->name('view.all.posts');
 
 

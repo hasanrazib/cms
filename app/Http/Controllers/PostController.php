@@ -10,4 +10,10 @@ class PostController extends Controller
 
         return view('backend.moduels.post.view_all_posts');
     }
+
+
+    public function addPost(){
+
+        return view('backend.moduels.post.add_post');
+    }
 }
