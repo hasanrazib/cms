@@ -34,3 +34,7 @@
 }
 
 
+.texteditor{padding: 30px 0;}
+
+.card-foot--left{width:65%;float:left}
+.card-foot--right{width:35%;float:left}
