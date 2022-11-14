@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Demo\DemoController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\CategoryController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -20,6 +21,19 @@ Route::controller(PostController::class)->group(function () {
     //Route::get('/district/delete/{id}','deleteDistrict')->name('delete.district');
     Route::get('/posts/add', 'addPost')->name('add.post');
     Route::get('/posts/all', 'viewAllPost')->name('view.all.posts');
+
+
+
+});
+
+// Category Controller
+Route::controller(CategoryController::class)->group(function () {
+    //Route::post('/district/insert', 'insertDistrict')->name('insert.district');
+   // Route::get('/district/edit/{id}','editDistrict')->name('edit.district');
+   // Route::post('/district/update/','updateDistrict')->name('update.district');
+    //Route::get('/district/delete/{id}','deleteDistrict')->name('delete.district');
+    //Route::get('/posts/add', 'addPost')->name('add.post');
+    Route::get('/categories/all', 'viewAllCategory')->name('view.all.categories');
 
 
 
