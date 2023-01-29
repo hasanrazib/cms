@@ -9,13 +9,13 @@ class PostController extends Controller
     // view all
     public function viewAllPost(){
 
-        return view('backend.moduels.post.view_all_posts');
+        return view('backend.modules.post.view_all_posts');
     }
 
     // add page
     public function addPost(){
 
-        return view('backend.moduels.post.add_post');
+        return view('backend.modules.post.add_post');
     }
 
 
