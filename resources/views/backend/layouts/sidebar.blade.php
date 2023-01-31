@@ -86,8 +86,9 @@
                                 </a>
                                 <ul class="sub-menu" aria-expanded="false">
                                     <li><a href="#">All Users</a></li>
-                                    <li><a href="#">Add New</a></li>
-                                    <li><a href="#">Profile</a></li>
+                                    <li><a href="{{url('modules')}}">Modules</a></li>
+                                    <li><a href="#">Permissions</a></li>
+                                    <li><a href="#">Roles</a></li>
 
                                 </ul>
                             </li>
