@@ -110,6 +110,8 @@
 
         <!-- App js -->
         <script src="{{ asset('backend/assets/js/app.js') }}"></script>
+        <!-- custom js:razib.dev -->
+        <script src="{{ asset('backend/assets/js/custom.js') }}"></script>
 
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
         <script src="https://cdn.jsdelivr.net/bootstrap.tagsinput/0.8.0/bootstrap-tagsinput.min.js" ></script>
@@ -137,6 +139,5 @@
  @endif
 </script>
 
-    </body>
-
+</body>
 </html>

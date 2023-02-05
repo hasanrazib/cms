@@ -9,8 +9,8 @@
     <div class="row">
         <div class="col-xl-4">
             <div class="page-title-box">
-                <h4 class="title-default display-inline mr-15">Modules</h4>
-                <a href="{{url('permissions/create')}}" class="btn btn-primary btn-sm">Add New</a>
+                <h4 class="title-default display-inline mr-15">Roles</h4>
+                <a href="{{url('roles/create')}}" class="btn btn-primary btn-sm">Add New</a>
             </div>
         </div>
     </div>
@@ -80,23 +80,31 @@
                         <tr>
                             <th scope="row"><input type="checkbox"/></th>
                             <th>#</th>
-                            <th>Module</th>
+                            <th>Name</th>
                             <th>Permission</th>
+                            <th>Updated At</th>
                             <th>Action</th>
                         </tr>
                         </thead>
 
 
                         <tbody>
-                        @forelse($permissions as $key => $permission)
+                        @forelse($roles as $key => $role)
                             <tr>
                                 <th scope="row"><input type="checkbox"/></th>
                                 <td>{{$key+1}}</td>
-                                <td>{{\App\Models\Module::find($permission->module_id)->module_name??''}}</td>
-                                <td>{{$permission->name??''}}</td>
+                                <td>{{$role->name??''}}</td>
                                 <td>
-                                    <a href="{{route('permissions.edit',$permission)}}" class="btn btn-info sm rh-btn" title="Edit Data">  <i class="fas fa-edit"></i> </a>
-                                    <form action="{{route('permissions.destroy',$permission)}}" method="POST" class="d-inline">
+                                    @if($role->permissions->count() > 0)
+                                    <span>{{$role->permissions->count()}}</span>
+                                    @else
+                                    <span>No permission found : </span>
+                                    @endif
+                                </td>
+                                <td>{{$role->updated_at->diffForHumans()}}</td>
+                                <td>
+                                    <a href="{{route('roles.edit',$role)}}" class="btn btn-info sm rh-btn" title="Edit Data">  <i class="fas fa-edit"></i> </a>
+                                    <form action="{{route('roles.destroy',$role)}}" method="POST" class="d-inline">
                                         @csrf @method('DELETE')
                                         <button type="submit" class="btn btn-danger sm rh-btn" onclick="return confirm('Are you sure ?? want to delete this ..')"><i class="fas fa-trash"></i></button>
                                     </form>
