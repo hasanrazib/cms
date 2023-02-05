@@ -48,4 +48,25 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    // user create: form validation
+    public static function userCheckValidation($request){
+
+        $request->validate([
+
+            'username' => 'required|unique:users',
+            'user_email' => 'required|unique:users',
+            'role_id'   =>  'required|array',
+            'password' => 'required|min:6|confirmed'
+
+        ]);
+
+    }
+
+    //
+
+
+
+
 }

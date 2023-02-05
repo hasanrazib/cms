@@ -85,7 +85,7 @@
                                     <span>Users</span>
                                 </a>
                                 <ul class="sub-menu" aria-expanded="false">
-                                    <li><a href="#">All Users</a></li>
+                                    <li><a href="{{url('users')}}">All Users</a></li>
                                     <li><a href="{{url('modules')}}">Modules</a></li>
                                     <li><a href="{{url('permissions')}}"">Permissions</a></li>
                                     <li><a href="{{url('roles')}}">Roles</a></li>
