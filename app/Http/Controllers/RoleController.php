@@ -21,7 +21,8 @@ class RoleController extends Controller
     {
         try{
 
-            $roles = Role::with('permissions')->latest('id')->get()??'';
+             $roles = Role::with('permissions')->get()??'';
+
             return view('backend.modules.role.index',compact('roles'));
 
         }catch (Exception $ex){

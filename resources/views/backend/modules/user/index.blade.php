@@ -79,8 +79,10 @@
                         <thead>
                         <tr>
                             <th scope="row"><input type="checkbox"/></th>
-                            <th>#</th>
                             <th>Username</th>
+                            <th>Name</th>
+                            <th>Mobile</th>
+                            <th>Role</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -90,11 +92,13 @@
                         @forelse($users as $key => $user)
                             <tr>
                                 <th scope="row"><input type="checkbox"/></th>
-                                <td>{{$key+1}}</td>
                                 <td>{{$user->username??''}}</td>
+                                <td>{{$user->first_name??''}} {{$user->last_name??''}}</td>
+                                <td>{{$user->user_mobile?:'N/A'}}</td>
+                                <td>@foreach($user->roles as $role)<span class="badge bg-warning">{{$role->name??''}}</span>@endforeach</td>
                                 <td>
-                                    <a href="{{route('user.edit',$user)}}" class="btn btn-info sm rh-btn" title="Edit Data">  <i class="fas fa-edit"></i> </a>
-                                    <form action="{{route('user.destroy',$user)}}" method="POST" class="d-inline">
+                                    <a href="{{route('users.edit', $user)}}" class="btn btn-info sm rh-btn" title="Edit Data">  <i class="fas fa-edit"></i> </a>
+                                    <form action="{{route('users.destroy', $user)}}" method="POST" class="d-inline">
                                         @csrf @method('DELETE')
                                         <button type="submit" class="btn btn-danger sm rh-btn" onclick="return confirm('Are you sure ?? want to delete this ..')"><i class="fas fa-trash"></i></button>
                                     </form>

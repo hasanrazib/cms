@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
             'username' =>'admin',
             'first_name' => 'Admin',
             'user_email' =>'admin@admin.com',
-            'user_email' =>'01818987778',
+            'user_mobile' =>'01818987778',
             'password' => Hash::make('admin1234'),
         ]);
     }

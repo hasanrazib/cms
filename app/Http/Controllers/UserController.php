@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Exception;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 
 class UserController extends Controller
@@ -16,12 +19,14 @@ class UserController extends Controller
     public function index()
     {
         try {
-            $users = User::with('roles')->whereNotIn('id',[1])->latest()->get();
 
-            return view('backend.modules.role.index',compact($users));
+            $users = User::with('roles')->latest()->get();
+            return view('backend.modules.user.index',compact('users'));
 
         }catch (Exception $ex){
+
             abort('403');
+
         }
     }
 
@@ -32,7 +37,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        $roles = Role::all()??'';
+        return view('backend.modules.user.create',compact('roles'));
     }
 
     /**
@@ -43,7 +49,17 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+
+        User::userCheckValidation($request);
+
+        $save_data = User::userStore($request);
+
+            if($save_data){
+                return redirect('users')->with(['message'=>'User Created Successfully!!','alert-type'=>'info']);
+            }else{
+                return back()->with(['message'=>'Something went to wrong ??','alert-type'=>'error']);
+            }
     }
 
     /**
@@ -65,7 +81,9 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $users = User::findORFail($id);
+
+        return view('backend.modules.user.edit',compact('users'));
     }
 
     /**
@@ -75,9 +93,17 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id, $user)
     {
-        //
+        User::userUpdateCheckValidation($request);
+
+        $update_data = User::updateUserInfo($request,$id);
+
+        if($update_data){
+            return redirect('users')->with(['message'=>'Update Successfully!!','alert-type'=>'info']);
+        }else{
+            return back()->with(['message'=>'Something went to wrong ??','alert-type'=>'error']);
+        }
     }
 
     /**
@@ -88,6 +114,10 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        User::findOrFail($id)->delete();
+
+        return redirect('users')->with(['message'=>'Data Deleted Successfully!!','alert-type'=>'danger']);
+
     }
+
 }

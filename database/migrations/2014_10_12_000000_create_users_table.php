@@ -21,8 +21,8 @@ return new class extends Migration
             $table->string('last_name')->nullable();
             $table->string('user_email')->unique();
             $table->string('user_mobile')->nullable();
-            $table->string('user_type')->default('user');
-            $table->tinyInteger('user_status')->default(0);
+            $table->string('user_type')->default('user')->nullable();;
+            $table->tinyInteger('user_status')->default('0')->nullable();;
             $table->string('user_image')->nullable();
             $table->string('password');
             $table->timestamp('email_verified_at')->nullable();

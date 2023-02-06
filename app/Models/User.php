@@ -8,6 +8,9 @@ use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -58,15 +61,64 @@ class User extends Authenticatable implements MustVerifyEmail
             'username' => 'required|unique:users',
             'user_email' => 'required|unique:users',
             'role_id'   =>  'required|array',
-            'password' => 'required|min:6|confirmed'
+            'password' => 'required|min:6'
 
         ]);
 
     }
 
-    //
+    // user create: store
 
+    public static function userStore($request){
 
+        $user = User::create([
+
+            'username'      =>$request->username??'',
+            'first_name'    =>$request->first_name??'',
+            'last_name'     =>$request->last_name??'',
+            'user_email'    =>$request->user_email??'',
+            'user_mobile'   =>$request->user_mobile??'',
+            'user_type'     =>$request->user_type??'',
+            'user_status'   =>$request->user_status,
+            'user_image'    =>$request->user_image??'',
+            'password'      => Hash::make($request->password)??''
+
+        ]);
+
+        $user->assignRole($request->input('role_id'));
+
+        return $user;
+
+    }
+
+    public static function userUpdateCheckValidation($request){
+
+        $request->validate([
+            'username' => 'required|unique:users',
+            'user_email' => 'required|unique:users',
+            'role_id'   =>  'required|array',
+            'password' => 'required|min:6'
+        ]);
+    }
+
+    // update user
+    public static function updateUserInfo($request,$user){
+
+        $data  = User::update([
+            'username'      =>$request->username??'',
+            'first_name'    =>$request->first_name??'',
+            'last_name'     =>$request->last_name??'',
+            'user_email'    =>$request->user_email??'',
+            'user_mobile'   =>$request->user_mobile??'',
+            'user_type'     =>$request->user_type??'',
+            'user_status'   =>$request->user_status,
+            'user_image'    =>$request->user_image??'',
+        ]);
+
+        $user->assignRole($request->input('role_id'));
+
+        return $data;
+    }
 
 
 }
