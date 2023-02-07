@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use Exception;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 
 class UserController extends Controller
@@ -49,9 +47,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-
-
-        User::userCheckValidation($request);
+        User::userValidationCheck($request);
 
         $save_data = User::userStore($request);
 
@@ -65,10 +61,10 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $user)
     {
         //
     }
@@ -76,48 +72,51 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        $users = User::findORFail($id);
-
-        return view('backend.modules.user.edit',compact('users'));
+        $roles = Role::all();
+        return view('backend.modules.user.edit',compact('user','roles'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id, $user)
+    public function update(Request $request, User $user)
     {
-        User::userUpdateCheckValidation($request);
 
-        $update_data = User::updateUserInfo($request,$id);
+        User::updateUserValidation($request,$user);
+
+        $update_data =  User::updateUserInfo($request,$user);
 
         if($update_data){
-            return redirect('users')->with(['message'=>'Update Successfully!!','alert-type'=>'info']);
+            return redirect('users')->with(['message'=>'Data updated successfully !!.','alert-type'=>'info']);
         }else{
-            return back()->with(['message'=>'Something went to wrong ??','alert-type'=>'error']);
+            return  back()->with(['message'=>'Something went to wrong ??','alert-type'=>'error']);
         }
+
+
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        User::findOrFail($id)->delete();
-
-        return redirect('users')->with(['message'=>'Data Deleted Successfully!!','alert-type'=>'danger']);
-
+        if(isset($user)){
+            $user->delete();
+            return redirect('users')->with(['message'=>'Data deleted successfully !!.','alert-type'=>'info']);
+        }else{
+            abort('403');
+        }
     }
-
 }

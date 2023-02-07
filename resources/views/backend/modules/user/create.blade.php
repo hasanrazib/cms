@@ -93,12 +93,12 @@
                                         @foreach($roles as $role)
                                         <option value="{{$role->id??''}}">{{$role->name??''}}</option>
                                         @endforeach
+                                        @error('role_id')
+                                        <span class="invalid-feedback" role="alert">
+                                             <strong>{{$message}}</strong>
+                                           </span>
+                                        @enderror
                                     </select>
-                                    @error('role_id')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{$message}}</strong>
-                                    </span>
-                                    @enderror
                                 </div>
                             </div>
                             <div class="row mb-3">

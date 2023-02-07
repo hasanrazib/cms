@@ -4,13 +4,12 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Traits\HasRoles;
+
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -54,16 +53,17 @@ class User extends Authenticatable implements MustVerifyEmail
 
 
     // user create: form validation
-    public static function userCheckValidation($request){
+    public static function userValidationCheck($request){
 
         $request->validate([
-
-            'username' => 'required|unique:users',
-            'user_email' => 'required|unique:users',
+            'username'      =>  'required|unique:users',
+            'user_email'     =>  'required|unique:users',
             'role_id'   =>  'required|array',
-            'password' => 'required|min:6'
+            'role_id.*' =>  'integer',
+            'password'      =>  'required|unique:users',
 
         ]);
+
 
     }
 
@@ -91,20 +91,22 @@ class User extends Authenticatable implements MustVerifyEmail
 
     }
 
-    public static function userUpdateCheckValidation($request){
+    public static function updateUserValidation($request,$user){
 
         $request->validate([
-            'username' => 'required|unique:users',
-            'user_email' => 'required|unique:users',
+            'username'      =>  'required|unique:users,username, '.$user->id,
+            'user_email'     =>  'required|unique:users,user_email, '.$user->id,
             'role_id'   =>  'required|array',
-            'password' => 'required|min:6'
+            'role_id.*' =>  'integer',
+
         ]);
     }
 
     // update user
     public static function updateUserInfo($request,$user){
 
-        $data  = User::update([
+
+        $data  =  $user->update([
             'username'      =>$request->username??'',
             'first_name'    =>$request->first_name??'',
             'last_name'     =>$request->last_name??'',
@@ -113,11 +115,14 @@ class User extends Authenticatable implements MustVerifyEmail
             'user_type'     =>$request->user_type??'',
             'user_status'   =>$request->user_status,
             'user_image'    =>$request->user_image??'',
+
         ]);
 
         $user->assignRole($request->input('role_id'));
 
         return $data;
+
+
     }
 
 
