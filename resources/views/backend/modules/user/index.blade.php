@@ -93,7 +93,7 @@
                         @forelse($users as $key => $user)
                             <tr>
                                 <th scope="row"><input type="checkbox"/></th>
-                                <td><img width="50" height="50" class="rounded-circle" src="https://dummyimage.com/200x200/000/fff" alt="image"></td>
+                                <td><img width="100" height="100" class="rounded-circle" src="https://dummyimage.com/200x200/000/fff" alt="image"></td>
                                 <td>{{$user->username??''}}</td>
                                 <td>{{$user->first_name??''}} {{$user->last_name??''}}</td>
                                 <td>{{$user->user_mobile?:'N/A'}}</td>
