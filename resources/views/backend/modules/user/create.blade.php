@@ -76,7 +76,7 @@
                             <div class="row mb-3">
                                 <label for="example-text-input" class="col-sm-2 col-form-label">User Image </label>
                                 <div class="col-sm-10">
-                                 <input name="profile_image" class="form-control" type="file"  id="user_image">
+                                 <input name="user_image" class="form-control" type="file"  id="user_image">
                                 </div>
                             </div>
                             <div class="row mb-3">

@@ -75,18 +75,6 @@
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label for="example-text-input" class="col-sm-2 col-form-label">User Image </label>
-                                <div class="col-sm-10">
-                                 <input name="profile_image" class="form-control" type="file"  id="user_image">
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <label for="example-text-input" class="col-sm-2 col-form-label">  </label>
-                                <div class="col-sm-10">
-                                    <img id="showUserImage" class="rounded avatar-lg" src="{{ (!empty($editData->profile_image))? url('upload/admin_images/'.$editData->profile_image):url('upload/no_image.jpg') }}" alt="Card image cap">
-                                </div>
-                            </div>
-                            <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">Select Role<span class="text-danger">*</span></label>
                                 <div class="col-sm-10">
                                     <select class="form-select" aria-label="Default select example" name="role_id[]" multiple="multiple">
@@ -99,6 +87,18 @@
                                         <strong>{{$message}}</strong>
                                     </span>
                                     @enderror
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="example-text-input" class="col-sm-2 col-form-label">User Image </label>
+                                <div class="col-sm-10">
+                                 <input name="user_image" class="form-control" type="file"  id="user_image">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="example-text-input" class="col-sm-2 col-form-label">  </label>
+                                <div class="col-sm-10">
+                                    <img id="showUserImage" class="rounded avatar-lg" src="{{ (!empty($user->user_image))? url('upload/admin_images/'.$user->user_image):url('upload/no_image.jpg') }}" alt="Card image cap">
                                 </div>
                             </div>
                             <div class="mb-3">

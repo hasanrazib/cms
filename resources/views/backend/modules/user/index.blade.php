@@ -93,12 +93,13 @@
                         @forelse($users as $key => $user)
                             <tr>
                                 <th scope="row"><input type="checkbox"/></th>
-                                <td><img width="100" height="100" class="rounded-circle" src="https://dummyimage.com/200x200/000/fff" alt="image"></td>
+                                <td><img width="50" height="50" class="rounded-circle" src="{{ (!empty($user->user_image))? url('upload/admin_images/'.$user->user_image):url('upload/no_image.jpg') }}" alt="image"></td>
                                 <td>{{$user->username??''}}</td>
                                 <td>{{$user->first_name??''}} {{$user->last_name??''}}</td>
                                 <td>{{$user->user_mobile?:'N/A'}}</td>
-                                <td>@foreach($user->roles as $role)<span class="badge bg-warning">{{$role->name??''}}</span>@endforeach</td>
+                                <td>@foreach($user->roles as $role)<span style="margin-right:5px" class="badge bg-warning">{{$role->name??''}}</span>@endforeach</td>
                                 <td>
+                                    <a href="{{route('users.show', $user)}}" class="btn btn-success sm rh-btn" title="Edit Data"> <i class="fas fa-eye "></i> </a>
                                     <a href="{{route('users.edit', $user)}}" class="btn btn-info sm rh-btn" title="Edit Data">  <i class="fas fa-edit"></i> </a>
                                     <form action="{{route('users.destroy', $user)}}" method="POST" class="d-inline">
                                         @csrf @method('DELETE')

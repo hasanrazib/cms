@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use App\Models\User;
 
@@ -39,23 +41,47 @@ class UserController extends Controller
         return view('backend.modules.user.create',compact('roles'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    // store
     public function store(Request $request)
     {
-        User::userValidationCheck($request);
+        $request->validate([
+            'username'      =>  'required|unique:users',
+            'user_email'     =>  'required|unique:users',
+            'role_id'   =>  'required|array',
+            'role_id.*' =>  'integer',
+            'password'      =>  'required|unique:users',
 
-        $save_data = User::userStore($request);
+        ]);
 
-            if($save_data){
-                return redirect('users')->with(['message'=>'User Created Successfully!!','alert-type'=>'info']);
-            }else{
-                return back()->with(['message'=>'Something went to wrong ??','alert-type'=>'error']);
-            }
+        $user = new User();
+        $user->username = $request->username;
+        $user->first_name = $request->first_name;
+        $user->last_name = $request->last_name;
+        $user->user_email = $request->user_email;
+        $user->user_mobile = $request->user_mobile;
+        $user->user_type = $request->user_type;
+        $user->user_status = $request->user_status;
+
+        if ($request->file('user_image')) {
+            $file = $request->file('user_image');
+
+            $filename = date('YmdHi').$file->getClientOriginalName();
+            $file->move(public_path('upload/admin_images'),$filename);
+            $user['user_image'] = $filename;
+
+        }
+
+        $user->password = Hash::make($request->password);
+        $user->assignRole($request->input('role_id'));
+        $user->save();
+
+        $notification = array(
+            'message' => 'User created Successfully',
+            'alert-type' => 'info'
+        );
+
+        return redirect('users')->with($notification);
+
     }
 
     /**
@@ -66,52 +92,70 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
+        return view('backend.modules.user.show',compact('user'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
+   // edit
     public function edit(User $user)
     {
         $roles = Role::all();
         return view('backend.modules.user.edit',compact('user','roles'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
+    //update
     public function update(Request $request, User $user)
     {
 
-        User::updateUserValidation($request,$user);
+        $request->validate([
+            'username'      =>  'required|unique:users,username, '.$user->id,
+            'user_email'     =>  'required|unique:users,user_email, '.$user->id,
+            'role_id'   =>  'required|array',
+            'role_id.*' =>  'integer',
 
-        $update_data =  User::updateUserInfo($request,$user);
+        ]);
 
-        if($update_data){
-            return redirect('users')->with(['message'=>'Data updated successfully !!.','alert-type'=>'info']);
+        $user->username = $request->username;
+        $user->first_name = $request->first_name;
+        $user->last_name = $request->last_name;
+        $user->user_email = $request->user_email;
+        $user->user_mobile = $request->user_mobile;
+        $user->user_type = $request->user_type;
+        $user->user_status = $request->user_status;
+
+        if ($request->file('user_image')) {
+
+            $file = $request->file('user_image');
+            $filename = date('YmdHi').$file->getClientOriginalName();
+            unlink(public_path('upload/admin_images/'.$user->user_image));
+            $file->move(public_path('upload/admin_images'),$filename);
+            $user->user_image = $filename;
+
         }else{
-            return  back()->with(['message'=>'Something went to wrong ??','alert-type'=>'error']);
+
+            unset($user->user_image);
+
         }
 
+        $user->password = Hash::make($request->password);
+        $user->syncRoles($request->input('role_id'));
+        $user->update();
+
+        $notification = array(
+            'message' => 'User update Successfully',
+            'alert-type' => 'info'
+        );
+
+        return redirect('users')->with($notification);
 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
+    // destroy
     public function destroy(User $user)
     {
+
+        $img = $user->user_image;
+        unlink('upload/admin_images/'.$img);
+
         if(isset($user)){
             $user->delete();
             return redirect('users')->with(['message'=>'Data deleted successfully !!.','alert-type'=>'info']);
