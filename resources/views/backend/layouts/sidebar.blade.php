@@ -49,7 +49,17 @@
                                     <li><a href="#">Add New</a></li>
                                 </ul>
                             </li>
-
+                            <li>
+                                <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                    <i class="ri-mail-send-line"></i>
+                                    <span>Services</span>
+                                </a>
+                                <ul class="sub-menu" aria-expanded="false">
+                                    <li><a href="{{url('services')}}">All Services</a></li>
+                                    <li><a href="{{url('services/create')}}">Add New</a></li>
+                                    <li><a href="#">Categories</a></li>
+                                </ul>
+                            </li>
                             <li>
                                 <a href="#" class=" waves-effect">
                                     <i class="ri-calendar-2-line"></i>
@@ -87,7 +97,7 @@
                                 <ul class="sub-menu" aria-expanded="false">
                                     <li><a href="{{url('users')}}">All Users</a></li>
                                     <li><a href="{{url('modules')}}">Modules</a></li>
-                                    <li><a href="{{url('permissions')}}"">Permissions</a></li>
+                                    <li><a href="{{url('permissions')}}">Permissions</a></li>
                                     <li><a href="{{url('roles')}}">Roles</a></li>
 
                                 </ul>
