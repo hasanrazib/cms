@@ -57,7 +57,7 @@ class ServiceController extends Controller
             'short_description'     => $request->short_description,
             'description'           => $request->description,
             'featured_image'        => $filename,
-            'slug'                  => $request->slug,
+            'slug'                  => $request->title,
             'created_by'            => Auth::user()->id,
             'created_at'            => Carbon::now()
         ]);
