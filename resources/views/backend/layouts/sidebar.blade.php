@@ -57,7 +57,7 @@
                                 <ul class="sub-menu" aria-expanded="false">
                                     <li><a href="{{url('services')}}">All Services</a></li>
                                     <li><a href="{{url('services/create')}}">Add New</a></li>
-                                    <li><a href="#">Categories</a></li>
+                                    <li><a href="{{url('service-categories')}}">Categories</a></li>
                                 </ul>
                             </li>
                             <li>

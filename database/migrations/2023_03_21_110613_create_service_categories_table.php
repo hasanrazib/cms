@@ -15,6 +15,14 @@ return new class extends Migration
     {
         Schema::create('service_categories', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->nullable();
+            $table->text('description')->nullable();
+            $table->string('parent_id')->nullable();
+            $table->string('slug')->nullable();
+            $table->string('category_image')->nullable();
+            $table->string('banner_image')->nullable();
+            $table->integer('created_by')->nullable();
+            $table->integer('updated_by')->nullable();
             $table->timestamps();
         });
     }

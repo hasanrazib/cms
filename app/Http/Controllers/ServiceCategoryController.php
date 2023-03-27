@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\ServiceCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class ServiceCategoryController extends Controller
 {
@@ -14,7 +16,8 @@ class ServiceCategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = ServiceCategory::tree(); 
+        return view('backend.modules.service.category.index',compact('categories'));
     }
 
     /**
@@ -35,7 +38,28 @@ class ServiceCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       
+
+
+        ServiceCategory::create([
+
+            'name'                  => $request->name,
+            'description'           => $request->description ,
+            'parent_id'             => $request->parent_id ,
+            'slug'                  => 'ddd',
+            //'category_image'        => $category_image,
+           // 'banner_image'          => $banner_image,
+            'created_by'            => Auth::user()->id,
+            'created_at'            => Carbon::now()
+        ]);
+
+        $notification = array(
+            'message' => 'Service Category Created Succesfully', 
+            'alert-type' => 'success'
+        );
+
+
+        return redirect('service-categories')->with($notification);
     }
 
     /**
