@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use App\Models\Service;
 
 class ServiceCategory extends Model
 {
@@ -68,5 +69,10 @@ private function generateSlug($name)
     return $slug;
 } 
 
+
+public function services(){
+    
+    return $this->belongsToMany(Service::class);
+}
 
 }

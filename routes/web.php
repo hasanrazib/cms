@@ -6,6 +6,8 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CategoryController;
 
+
+
 Route::get('/', function () {
     return view('welcome');
 });

@@ -52,7 +52,29 @@
                                     <div id="general_settings" class="collapse"
                                             aria-labelledby="headingOne" data-bs-parent="#accordion">
                                         <div class="card-body">
-                                            <textarea class="form-control" rows="3"></textarea>
+                                            <div class="col-sm-12 mb-3">
+                                                <label for="example-text-input" class="col-form-label">Page Banner</label>
+                                                <div class="col-sm-12">
+                                                    <input name="page_banner" class="form-control" type="file"  id="page_banner">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 mb-3">
+                                                <div class="col-sm-6">
+                                                    <img class="image-resize-backend" id="show_page_banner" src="{{url('upload/no_image.jpg') }}" alt="Image">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 mb-3">
+                                                <label for="page_title" class="col-form-label">Page Title</label>
+                                                <div class="col-sm-7">
+                                                    <input class="form-control" type="text" name="page_title">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 mb-3">
+                                                <label for="banner_text" class="col-form-label">Banner Text</label>
+                                                <div class="col-sm-12">
+                                                    <textarea  class="form-control" rows="3" name="banner_text"></textarea>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -60,7 +82,7 @@
                         </div>
                         <!-- end: genarel settings -->
                         <!-- start: Additional Info -->
-                        <div class="excerpt">
+                        {{-- <div class="excerpt">
                             <div id="accordion" class="custom-accordion">
                                 <div class="card">
                                     <a href="#additional_info" class="text-dark" data-bs-toggle="collapse"
@@ -81,8 +103,8 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <!-- end: genarel settings -->
+                        </div> --}}
+                        <!-- end: Additional Info -->
                         <!-- start: short description -->
                         <div class="excerpt">
                             <div id="accordion" class="custom-accordion">
@@ -159,41 +181,23 @@
                                     aria-labelledby="headingOne" data-bs-parent="#accordion">
                                 <div class="card-body ">
                                     <ul>
-                                        <li><input class="" type="checkbox">Test</li>
-                                        <li> <input type="checkbox">Test
+                                        @foreach($categories as $category)
+                                        <li><input class="" type="checkbox" name="service_category_id[]" value="{{$category->id}}">{{$category->name}}
                                             <ul>
-                                                <li><input type="checkbox"/>Test 1</li>
-                                                <li><input type="checkbox"/>Test 1
-                                                    <ul>
-                                                        <li><input type="checkbox"/>Test 2</li>
-                                                        <li><input type="checkbox"/>Test 2</li>
-                                                        <li><input type="checkbox"/>Test 2</li>
-                                                    </ul>
+                                                @foreach($category->children as $child)
+                                                <li><input type="checkbox" name="service_category_id[]" value="{{$child->id}}"/>{{$child->name}}
+                                                <ul>
+                                                    @foreach($child->children as $child2)
+                                                    <li><input type="checkbox" name="service_category_id[]" value="{{$child2->id}}"/>{{$child2->name}}
+                                                    @endforeach
+                                                </ul>
                                                 </li>
-                                                <li><input type="checkbox"/>Test 1</li>
+                                                @endforeach
                                             </ul>
                                         </li>
-                                        <li> <input type="checkbox">Test</li>
+                                        @endforeach
+                                       
                                     </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <a href="#tags" class="text-dark" data-bs-toggle="collapse"
-                                            aria-expanded="true"
-                                            aria-controls="collapseOne">
-                                <div class="card-header" id="headingOne">
-                                    <h6 class="m-0">
-                                        Tags
-                                        <i class="mdi mdi-minus float-end accor-plus-icon"></i>
-                                    </h6>
-                                </div>
-                            </a>
-
-                            <div id="tags" class="collapse show"
-                                    aria-labelledby="headingOne" data-bs-parent="#accordion">
-                                <div class="card-body">
-                                    <input class="form-control" type="text" data-role="tagsinput">
                                 </div>
                             </div>
                         </div>

@@ -6,6 +6,7 @@ use App\Models\ServiceCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Image;
 
 class ServiceCategoryController extends Controller
 {
@@ -39,20 +40,32 @@ class ServiceCategoryController extends Controller
     public function store(Request $request)
     {
        
+        
+        $data = new ServiceCategory();
+        $data->name  = $request->name;
+        $data->description  = $request->description;
+        $data->parent_id  = $request->parent_id;
+      
+        if ($request->file('category_image')) {
+            $image = $request->file('category_image');
+            $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();  // 3434343443.jpg
+            Image::make($image)->resize(200,200)->save('upload/services/service_category/'.$name_gen);
+            $category_image_url = 'upload/services/service_category/'.$name_gen;
+            $data->category_image  = $category_image_url;
+        }
+        if ($request->file('banner_image')) {
+            $image = $request->file('banner_image');
+            $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();  // 3434343443.jpg
+            Image::make($image)->resize(1366,768)->save('upload/services/service_category/'.$name_gen);
+            $banner_image_url = 'upload/services/service_category/'.$name_gen;
+            $data->banner_image  = $banner_image_url;
+        }
+       
+        $data->created_by  = Auth::user()->id;
+        $data->created_at  = Carbon::now();
+        $data->save();
 
-
-        ServiceCategory::create([
-
-            'name'                  => $request->name,
-            'description'           => $request->description ,
-            'parent_id'             => $request->parent_id ,
-            'slug'                  => 'ddd',
-            //'category_image'        => $category_image,
-           // 'banner_image'          => $banner_image,
-            'created_by'            => Auth::user()->id,
-            'created_at'            => Carbon::now()
-        ]);
-
+    
         $notification = array(
             'message' => 'Service Category Created Succesfully', 
             'alert-type' => 'success'

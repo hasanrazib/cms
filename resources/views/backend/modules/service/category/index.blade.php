@@ -49,6 +49,28 @@
                             <textarea class="form-control" rows="5" name="description"></textarea>
                             <p>The description is not prominent by default; however, some themes may show it.</p>
                         </div>
+                        <div class="col-sm-12 mb-3">
+                            <label for="example-text-input" class="col-form-label">Category Image</label>
+                            <div class="col-sm-10">
+                             <input name="category_image" class="form-control" type="file"  id="user_image">
+                            </div>
+                        </div>
+                        <div class="col-sm-12 mb-3">
+                            <div class="col-sm-10">
+                                <img id="showUserImage" class="rounded avatar-lg" src="{{url('upload/no_image.jpg') }}" alt="Image">
+                            </div>
+                        </div>
+                        <div class="col-sm-12 mb-3">
+                            <label for="example-text-input" class="col-form-label">Banner Image</label>
+                            <div class="col-sm-10">
+                             <input name="banner_image" class="form-control" type="file"  id="cat_banner_img">
+                            </div>
+                        </div>
+                        <div class="col-sm-12 mb-3">
+                            <div class="col-sm-10">
+                                <img id="show_cat_bnner_img" class="rounded avatar-lg" src="{{url('upload/no_image.jpg') }}" alt="Image">
+                            </div>
+                        </div>
                         <button type="submit" class="btn btn-primary btn-sm">Add New Category</button>
                     </form>
                 </div>
@@ -104,7 +126,7 @@
                                     <td>{{$category->name}}</td>
                                     <td>{{$category->description}}</td>
                                     <td>{{$category->slug}}</td>
-                                    <td>0</td>
+                                    <td>{{$category->count()}}</td>
                                     <td>
                                         <a href="" class="btn btn-info sm rh-btn" title="Edit Data">  <i class="fas fa-edit"></i> </a>
                                         <a href="" class="btn btn-danger sm rh-btn" title="Delete Data" id="delete">  <i class="fas fa-trash-alt"></i> </a>

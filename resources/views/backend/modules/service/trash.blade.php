@@ -19,8 +19,8 @@
         <div class="col-lg-12 col-xl-12 mb-20">
             <div class="rh-links">
                 <ul>
-                    <li><a href="{{route('services.index')}}" >All ({{$services->count()}}) | </a></li>
-                    <li><a href="{{route('trash.list')}}" class="active"> Trash ({{$trash_count}})</a></li>
+                    <li><a href="{{route('services.index')}}" class="active">All ({{$services_count}}) | </a></li>
+                    <li><a href="{{route('trash.list')}}"> Trash ({{$trash_services->count()}})</a></li>
                 </ul>
             </div>
             <div class="row">
@@ -75,7 +75,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-striped mb-0">
+                        <table class="table mb-0">
 
                             <thead>
                                 <tr>
@@ -83,14 +83,14 @@
                                     <th width="55%">Title</th>
                                     <th>Categories</th>
                                     <th>Date</th>
-                                    <th width="15%">Action</th>
+                                    <th width="30%">Action</th>
 
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse($services as $item)
+                                @forelse($trash_services as $item)
                                 
-                                <tr>
+                                <tr style="opacity:.7">
                                     <th scope="row"><input type="checkbox"/></th>
                                     <td>{{$item->title??''}}</td>
                                     <td>
@@ -100,10 +100,10 @@
                                     </td>
                                     <td>Published at {{$item->updated_at->diffForHumans()}}</td>
                                     <td>
-                                        <a href="" class="btn btn-info sm rh-btn" title="Edit Data">  <i class="fas fa-edit"></i> </a>
+                                        <a href="{{route('restore.service', $item->id)}}" class="btn btn-info sm rh-btn">Restore</a>
                                         <form action="{{route('services.destroy',$item)}}" method="POST" class="d-inline">
                                             @csrf @method('DELETE')
-                                            <button type="submit" id="delete" class="btn btn-danger sm rh-btn"><i class="fas fa-trash-alt"></i></button>
+                                            <button type="submit" id="delete" class="btn btn-danger sm rh-btn">Permanent Delete</button>
                                          </form>
                                     </td>
                                 </tr>

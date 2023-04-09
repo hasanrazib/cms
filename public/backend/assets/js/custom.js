@@ -19,6 +19,22 @@ $(document).ready(function (){
         reader.readAsDataURL(e.target.files['0']);
     });
 
+    $('#cat_banner_img').change(function(e){
+        var reader = new FileReader();
+        reader.onload = function(e){
+            $('#show_cat_bnner_img').attr('src',e.target.result);
+        }
+        reader.readAsDataURL(e.target.files['0']);
+    });
+
+    $('#page_banner').change(function(e){
+        var reader = new FileReader();
+        reader.onload = function(e){
+            $('#show_page_banner').attr('src',e.target.result);
+        }
+        reader.readAsDataURL(e.target.files['0']);
+    });
+
 });
 
 
