@@ -13,6 +13,7 @@ Route::controller(ServiceController::class)->group(function () {
     Route::get('/services/trash', 'trashList')->name('trash.list');
     Route::get('/services/restore/{id}', 'restoreService')->name('restore.service');
     Route::get('/services/permanent-delete/{id}', 'pdeleteService')->name('pdelete.service');
+    Route::delete('/services/delete-all', 'deleteAll')->name('delete.all');
 });
 
 Route::resource('modules', ModuleController::class);

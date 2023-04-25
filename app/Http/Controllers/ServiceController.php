@@ -121,7 +121,7 @@ class ServiceController extends Controller
      */
     public function edit(Service $service)
     {
-        //
+       return "hi";
     }
 
     /**
@@ -155,6 +155,16 @@ class ServiceController extends Controller
         return redirect('services')->with($notification);
         
     }
+
+    public function deleteAll(Request $request){
+
+       return $ids = $request->ids;
+
+        Service::whereIn('id',$ids)->delete();
+
+        return response()->json(["success"=>"Emmm"]);
+    }
+
 
     // trash list
     public function trashList(){
@@ -192,5 +202,8 @@ class ServiceController extends Controller
 
         return redirect('services')->with($notification);
     }
+
+
+
 
 }

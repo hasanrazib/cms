@@ -23,7 +23,9 @@
                     <li><a href="{{route('trash.list')}}" class="active"> Trash ({{$trash_count}})</a></li>
                 </ul>
             </div>
-            <div class="row">
+            {{-- <a href="" class="btn btn-danger" id="deleteAllselectedRecord">Delete</a> --}}
+
+            {{-- <div class="row">
                 <div class="col-lg-3 col-xl-3">
                     <div class="rh-select-wrap">
                         <select class="form-select" aria-label="Default select example">
@@ -69,17 +71,16 @@
                         </button>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-striped mb-0">
-
                             <thead>
                                 <tr>
-                                    <th>#</th>
+                                    <th><input type="checkbox" name="" id="select_all_ids" /></th>
                                     <th width="55%">Title</th>
                                     <th>Categories</th>
                                     <th>Date</th>
@@ -90,8 +91,8 @@
                             <tbody>
                                 @forelse($services as $item)
                                 
-                                <tr>
-                                    <th scope="row"><input type="checkbox"/></th>
+                                <tr id="services_ids_{{$item->id}}">
+                                    <th scope="row"><input type="checkbox" class="checkbox_ids" name="ids" value="{{$item->id}}"/></th>
                                     <td>{{$item->title??''}}</td>
                                     <td>
                                         @foreach ($item->categories as $category)
@@ -100,7 +101,7 @@
                                     </td>
                                     <td>Published at {{$item->updated_at->diffForHumans()}}</td>
                                     <td>
-                                        <a href="" class="btn btn-info sm rh-btn" title="Edit Data">  <i class="fas fa-edit"></i> </a>
+                                        <a href="{{route('services.edit',$item)}}" class="btn btn-info sm rh-btn" title="Edit Data">  <i class="fas fa-edit"></i> </a>
                                         <form action="{{route('services.destroy',$item)}}" method="POST" class="d-inline">
                                             @csrf @method('DELETE')
                                             <button type="submit" id="delete" class="btn btn-danger sm rh-btn"><i class="fas fa-trash-alt"></i></button>
@@ -132,5 +133,53 @@
         </div>
     </div> <!-- end:Container -->
 </div> <!-- end:: Main Content -->
+@endsection
+@section('scripts')
+<script>
+$(function(e){
 
+    $("#select_all_ids").click(function(){
+
+        $('.checkbox_ids').prop('checked',$(this).prop('checked'));
+        
+    });
+
+  
+    $('#deleteAllselectedRecord').click(function(e){
+        e.preventDefault();
+
+        var all_ids = [];
+        
+        $('input:checkbox[name=ids]:checked').each(function(){
+            all_ids.push($(this).val());
+            
+        });
+        
+        $.ajax({
+   
+            url:"{{route('delete.all')}}",
+            type:"DELETE",
+            data:{
+                ids:all_ids,
+               
+            },
+         
+            success:function(response){
+
+                console.log(response)
+                alert(response);
+                $.each(all_ids,function(key,val){
+
+                    $('#service_ids'+val).remove();
+
+
+                });
+            }
+
+        });
+
+    });
+});
+
+</script>
 @endsection

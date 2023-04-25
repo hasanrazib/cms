@@ -101,10 +101,7 @@
                                     <td>Published at {{$item->updated_at->diffForHumans()}}</td>
                                     <td>
                                         <a href="{{route('restore.service', $item->id)}}" class="btn btn-info sm rh-btn">Restore</a>
-                                        <form action="{{route('services.destroy',$item)}}" method="POST" class="d-inline">
-                                            @csrf @method('DELETE')
-                                            <button type="submit" id="delete" class="btn btn-danger sm rh-btn">Permanent Delete</button>
-                                         </form>
+                                        <a href="{{route('pdelete.service', $item->id)}}" class="btn btn-danger sm rh-btn">Permanent Delete</a>
                                     </td>
                                 </tr>
                                 @empty
