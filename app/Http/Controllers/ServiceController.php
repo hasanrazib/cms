@@ -9,7 +9,7 @@ use App\Models\User;
 use App\Models\Service;
 use App\Models\ServiceCategory;
 use Image;
-
+use Illuminate\Support\Facades\DB;
 class ServiceController extends Controller
 {
     /**
@@ -85,12 +85,6 @@ class ServiceController extends Controller
 
         $data->categories()->attach($request->service_category_id);
 
-        
-        
-
-       
-     
-
     
         $notification = array(
             'message' => 'Service Created Succesfully', 
@@ -121,7 +115,9 @@ class ServiceController extends Controller
      */
     public function edit(Service $service)
     {
-       return "hi";
+        $categories = ServiceCategory::tree(); 
+       
+        return view('backend.modules.service.edit',compact('categories','service'));
     }
 
     /**
