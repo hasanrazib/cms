@@ -129,7 +129,48 @@ class ServiceController extends Controller
      */
     public function update(Request $request, Service $service)
     {
-        //
+        $service->title = $request->title;
+
+        if ($request->service_category_id) {
+            foreach ($request->service_category_id as $v){
+                $service_category_id[] = $v;
+                $data->service_category_id  = implode(',', $service_category_id);
+            }
+        }
+
+        $service->short_description  = $request->short_description;
+        $service->description  = $request->description;
+
+        if ($request->file('featured_image')) {
+            $image = $request->file('featured_image');
+            $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();  // 3434343443.jpg
+            Image::make($image)->resize(555,323)->save('upload/services/'.$name_gen);
+            $featured_image_url = 'upload/services/'.$name_gen;
+            $service->featured_image  = $featured_image_url;
+        }
+
+        $service->slug  = $request->title;
+
+        if ($request->file('page_banner')) {
+            $image = $request->file('page_banner');
+            $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();  // 3434343443.jpg
+            unlink(public_path($service->page_banner));
+            Image::make($image)->resize(1920,450)->save('upload/services/'.$name_gen);
+            $page_banner_image_url = 'upload/services/'.$name_gen;
+            $service->page_banner  = $page_banner_image_url;
+        }
+
+        $service->page_title  = $request->page_title;
+        $service->banner_text  = $request->banner_text;
+        $service->updated_by  =  Auth::user()->id;
+        $service->updated_at  = Carbon::now();
+        $service->update();
+
+        $notification = array(
+            'message' => 'Service Updated Successfully', 
+            'alert-type' => 'success'
+        );
+        return redirect('services')->with($notification);
     }
 
     /**
@@ -154,7 +195,7 @@ class ServiceController extends Controller
 
     public function deleteAll(Request $request){
 
-       return $ids = $request->ids;
+        $ids = $request->ids;
 
         Service::whereIn('id',$ids)->delete();
 

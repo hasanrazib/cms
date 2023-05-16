@@ -14,8 +14,8 @@
             </div>
         </div>
         <!-- end page title -->
-        <form action="{{route('services.store')}}" method="POST" enctype="multipart/form-data">
-            @csrf
+        <form action="{{route('services.update',$service)}}" method="POST" enctype="multipart/form-data">
+            @csrf @method('PUT')
         <div class="row">
             <div class="col-lg-9 col-xl-9">
                 <div class="card">
@@ -162,8 +162,7 @@
                                         </ul>
                                     </div>
                                     <div class="card-foot" style="">
-                                        <button type="button" class="btn btn-sm btn-danger btn-primary waves-effect waves-light">Delete</button>
-                                        <button type="submit" class="btn btn-sm btn-primary btn-primary waves-effect waves-light">Published</button>
+                                        <button type="submit" class="btn btn-sm btn-primary btn-primary waves-effect waves-light">Update</button>
                                     </div>
                                 </div>
                             </div>

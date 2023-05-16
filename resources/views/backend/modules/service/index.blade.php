@@ -105,7 +105,7 @@
                                         <form action="{{route('services.destroy',$item)}}" method="POST" class="d-inline">
                                             @csrf @method('DELETE')
                                             <button type="submit" id="delete" class="btn btn-danger sm rh-btn"><i class="fas fa-trash-alt"></i></button>
-                                         </form>
+                                        </form>
                                     </td>
                                 </tr>
                                 @empty
