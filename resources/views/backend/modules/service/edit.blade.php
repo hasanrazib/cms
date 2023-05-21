@@ -25,7 +25,12 @@
                                 <input class="form-control" type="text" placeholder="Add Title" name="title" value="{{$service->title}}">
                             </div>
                             <div class="col-sm-12 mt-15">
-                               <span>Permalink: <a href="#" style="color:#2F84EA">{{$service->slug}}</a><button class="btn btn-sm btn-outline-primary waves-effect waves-light" type="button">Edit</button></span>
+                               <span>Permalink: <a href="#" style="color:#2F84EA">{{asset('/')}}</a><input style="width:50%" type="text" value="{{$service->slug}}" name="slug"></span>
+                                @error('slug')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{$message}}</strong>
+                                </span>
+                                @enderror
                             </div>
                         </div>
                         <div class="texteditor">
@@ -165,7 +170,7 @@
                                                 <label for="Inactive">Inactive</label>
                                                 @endif
                                             </fieldset>
-                                            <li>Visibility: <strong>Public </strong><a href="#"  style="color:#2F84EA">Edit</a></li>
+                                            <li>Order: <input class="form-control" type="text" name="order_by" value="{{$service->order_by}}"></li>
                                             <li>Publish: <strong>Immediately </strong><a href="#"  style="color:#2F84EA">Edit</a></li>
                                         </ul>
                                     </div>

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Service;
 use App\Models\ServiceCategory;
+use Illuminate\Support\Str;
 use Image;
 use Illuminate\Support\Facades\DB;
 class ServiceController extends Controller
@@ -19,7 +20,7 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        $services = Service::with('categories')->latest()->get();
+        $services = Service::with('categories')->orderBy('order_by')->latest()->get();
         $trash_count = Service::onlyTrashed()->with('categories')->latest()->count();
 
         return view('backend.modules.service.index',compact('services','trash_count'));
@@ -67,7 +68,7 @@ class ServiceController extends Controller
             $data->featured_image  = $featured_image_url;
         }
 
-        $data->slug  = $request->title;
+        //$data->slug  = $request->title;
 
         if ($request->file('page_banner')) {
             $image = $request->file('page_banner');
@@ -77,6 +78,7 @@ class ServiceController extends Controller
             $data->page_banner  = $page_banner_image_url;
         }
         $data->status  = $request->status;
+        $data->order_by  = $request->order_by;
         $data->page_title  = $request->page_title;
         $data->banner_text  = $request->banner_text;
         $data->created_by  =  Auth::user()->id;
@@ -130,6 +132,7 @@ class ServiceController extends Controller
     public function update(Request $request, Service $service)
     {
 
+    
         $service->title = $request->title;
 
         if ($request->service_category_id) {
@@ -150,7 +153,7 @@ class ServiceController extends Controller
             $service->featured_image  = $featured_image_url;
         }
 
-        $service->slug  = $request->title;
+        $service->slug = Str::slug($request->slug);
 
         if ($request->file('page_banner')) {
             $image = $request->file('page_banner');
@@ -161,6 +164,7 @@ class ServiceController extends Controller
             $service->page_banner  = $page_banner_image_url;
         }
         $service->status  = $request->status;
+        $service->order_by  = $request->order_by;
         $service->page_title  = $request->page_title;
         $service->banner_text  = $request->banner_text;
         $service->updated_by  =  Auth::user()->id;

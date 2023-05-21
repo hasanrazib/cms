@@ -81,10 +81,11 @@
                             <thead>
                                 <tr>
                                     <th><input type="checkbox" name="" id="select_all_ids" /></th>
+                                    <!-- <th width="5%">Order</th> -->
                                     <th width="55%">Title</th>
                                     <th>Categories</th>
                                     <th>Status</th>
-                                    <th>Date</th>
+                                    <th width="10%">Date</th>
                                     <th width="15%">Action</th>
 
                                 </tr>
@@ -94,6 +95,7 @@
                                 
                                 <tr id="services_ids_{{$item->id}}">
                                     <th scope="row"><input type="checkbox" class="checkbox_ids" name="ids" value="{{$item->id}}"/></th>
+                                    <!-- <td>{{$item->order_by??''}}</td> -->
                                     <td>{{$item->title??''}}</td>
                                     <td>
                                         @foreach ($item->categories as $category)
@@ -104,7 +106,7 @@
                                         @if($item->status==1)
                                         <span class="badge bg-success">Active</span>
                                         @else
-                                        <span class="badge bg-danger">Inactive</span>
+                                        <span class="badge bg-danger">Inactive</>
                                         @endif
                                     </td>
                                     <td>Published at {{$item->updated_at->diffForHumans()}}</td>

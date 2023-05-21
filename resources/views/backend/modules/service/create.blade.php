@@ -24,9 +24,6 @@
                             <div class="col-sm-12">
                                 <input class="form-control" type="text" placeholder="Add Title" name="title">
                             </div>
-                            <div class="col-sm-12 mt-15">
-                               <span>Permalink: <a href="#" style="color:#2F84EA">https://razib.dev/sfdsf/</a><button class="btn btn-sm btn-outline-primary waves-effect waves-light" type="button">Edit</button></span>
-                            </div>
                         </div>
                         <div class="texteditor">
                             <textarea id="elm1" name="description"></textarea>
@@ -160,7 +157,7 @@
                                                 <input type="radio" name="status" value="0">
                                                 <label for="Inactive">Inactive</label>
                                             </fieldset>
-                                            <li>Visibility: <strong>Public </strong><a href="#"  style="color:#2F84EA">Edit</a></li>
+                                            <li>Order: <input class="form-control" type="text" name="order_by"></li>
                                             <li>Publish: <strong>Immediately </strong><a href="#"  style="color:#2F84EA">Edit</a></li>
                                         </ul>
                                     </div>

@@ -23,6 +23,7 @@ class Service extends Model
             $service->slug = $service->generateSlug($service->title);
             $service->save();
         });
+
     }
 
     private function generateSlug($title)
