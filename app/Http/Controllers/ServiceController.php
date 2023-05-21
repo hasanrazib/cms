@@ -44,7 +44,7 @@ class ServiceController extends Controller
      */
     public function store(Request $request)
     {
-   // return $request;
+    
 
         $data = new Service();
         $data->title  = $request->title;
@@ -76,7 +76,7 @@ class ServiceController extends Controller
             $page_banner_image_url = 'upload/services/'.$name_gen;
             $data->page_banner  = $page_banner_image_url;
         }
-
+        $data->status  = $request->status;
         $data->page_title  = $request->page_title;
         $data->banner_text  = $request->banner_text;
         $data->created_by  =  Auth::user()->id;
@@ -129,6 +129,7 @@ class ServiceController extends Controller
      */
     public function update(Request $request, Service $service)
     {
+
         $service->title = $request->title;
 
         if ($request->service_category_id) {
@@ -159,7 +160,7 @@ class ServiceController extends Controller
             $page_banner_image_url = 'upload/services/'.$name_gen;
             $service->page_banner  = $page_banner_image_url;
         }
-
+        $service->status  = $request->status;
         $service->page_title  = $request->page_title;
         $service->banner_text  = $request->banner_text;
         $service->updated_by  =  Auth::user()->id;

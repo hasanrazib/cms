@@ -83,6 +83,7 @@
                                     <th><input type="checkbox" name="" id="select_all_ids" /></th>
                                     <th width="55%">Title</th>
                                     <th>Categories</th>
+                                    <th>Status</th>
                                     <th>Date</th>
                                     <th width="15%">Action</th>
 
@@ -98,6 +99,13 @@
                                         @foreach ($item->categories as $category)
                                         {{ $category->name}}<br>
                                         @endforeach
+                                    </td>
+                                    <td>
+                                        @if($item->status==1)
+                                        <span class="badge bg-success">Active</span>
+                                        @else
+                                        <span class="badge bg-danger">Inactive</span>
+                                        @endif
                                     </td>
                                     <td>Published at {{$item->updated_at->diffForHumans()}}</td>
                                     <td>

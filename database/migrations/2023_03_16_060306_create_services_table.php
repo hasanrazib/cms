@@ -21,6 +21,8 @@ return new class extends Migration
             $table->text('featured_image')->nullable();
             $table->string('service_category_id')->nullable();
             $table->string('slug')->nullable();
+            $table->tinyInteger('status')->nullable()->comment('1 = active, 0 = inactive');
+            $table->integer('order_by')->nullable();
             $table->string('page_banner')->nullable();
             $table->string('page_title')->nullable();
             $table->string('banner_text')->nullable();

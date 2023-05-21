@@ -156,7 +156,15 @@
                                 <div class="card-body">
                                     <div class="">
                                         <ul>
-                                            <li>Status: <strong>Draft </strong><a href="#" style="color:#2F84EA">Edit</a></li>
+                                            <li><b>Status:</b><br>
+                                            <fieldset>
+                                                @if($service->status == $service->status)
+                                                <input type="radio" name="status" value="1" {{ $service->status == '1' ? 'checked' : ''}}>
+                                                <label for="active">Active</label><br>
+                                                <input type="radio" name="status" value="0" {{ $service->status == '0' ? 'checked' : ''}}>
+                                                <label for="Inactive">Inactive</label>
+                                                @endif
+                                            </fieldset>
                                             <li>Visibility: <strong>Public </strong><a href="#"  style="color:#2F84EA">Edit</a></li>
                                             <li>Publish: <strong>Immediately </strong><a href="#"  style="color:#2F84EA">Edit</a></li>
                                         </ul>
