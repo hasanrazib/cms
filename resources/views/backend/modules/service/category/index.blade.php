@@ -36,9 +36,12 @@
                                 <option value="">None</option>
                                 @foreach($categories as $category)
                                 <option value="{{$category->id}}">{{$category->name}}</option>
-                                @foreach($category->children as $child)
-                                <option class="rh-level-1" value="{{$child->id}}">{{$child->name}}</option>
-                                @endforeach
+                                    @foreach($category->children as $child)
+                                    <option class="rh-level-1" value="{{$child->id}}">-{{$child->name}}</option>
+                                        @foreach($child->children as $child2)
+                                        <option class="rh-level-2" value="{{$child2->id}}">--{{$child2->name}}</option>
+                                        @endforeach
+                                    @endforeach
                                 @endforeach
                             </select>
                             <p>The “slug” is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens.</p>
