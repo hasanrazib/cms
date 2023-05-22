@@ -82,10 +82,10 @@
                                 <tr>
                                     <th><input type="checkbox" name="" id="select_all_ids" /></th>
                                     <!-- <th width="5%">Order</th> -->
-                                    <th width="55%">Title</th>
-                                    <th>Categories</th>
-                                    <th>Status</th>
-                                    <th width="10%">Date</th>
+                                    <th width="45%">Title</th>
+                                    <th width="15%">Categories</th>
+                                    <th width="10%">Status</th>
+                                    <th width="15%">Date</th>
                                     <th width="15%">Action</th>
 
                                 </tr>
@@ -99,7 +99,7 @@
                                     <td>{{$item->title??''}}</td>
                                     <td>
                                         @foreach ($item->categories as $category)
-                                        {{ $category->name}}<br>
+                                        -{{ $category->name}}<br>
                                         @endforeach
                                     </td>
                                     <td>
@@ -111,6 +111,7 @@
                                     </td>
                                     <td>Published at {{$item->updated_at->diffForHumans()}}</td>
                                     <td>
+                                        <a href="" class="btn btn-success sm rh-btn" title="view">  <i class=" fas fa-eye"></i> </a>
                                         <a href="{{route('services.edit',$item)}}" class="btn btn-info sm rh-btn" title="Edit Data">  <i class="fas fa-edit"></i> </a>
                                         <form action="{{route('services.destroy',$item)}}" method="POST" class="d-inline">
                                             @csrf @method('DELETE')
