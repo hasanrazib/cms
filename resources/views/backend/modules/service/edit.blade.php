@@ -198,13 +198,13 @@
                                     <ul>
                                         
                                         @foreach($categories as $category)
-                                        <li><input class="" type="checkbox" name="service_category_id[]" value="{{$category->id}}" >{{$category->name}}
+                                        <li><input class="" type="checkbox" name="service_category_id[]" value="{{$category->id}}" @foreach($service_service_categories as $rPermission) {{$category->id == $rPermission->service_category_id ? 'checked':''}} @endforeach />{{$category->name}}
                                             <ul>
                                                 @foreach($category->children as $child)
-                                                <li><input type="checkbox" name="service_category_id[]" value="{{$child->id}}" {{$child->id == $service->parant_id ? 'checked':''}}/>{{$child->name}}
+                                                <li><input type="checkbox" name="service_category_id[]" value="{{$child->id}}" @foreach($service_service_categories as $rPermission) {{$child->id == $rPermission->service_category_id ? 'checked':''}} @endforeach/>{{$child->name}}
                                                 <ul>
                                                     @foreach($child->children as $child2)
-                                                    <li><input type="checkbox" name="service_category_id[]" value="{{$child2->id}}" {{$child2->id == $service->parant_id ? 'checked':''}}/>{{$child2->name}}
+                                                    <li><input type="checkbox" name="service_category_id[]" value="{{$child2->id}}" @foreach($service_service_categories as $rPermission) {{$child2->id == $rPermission->service_category_id ? 'checked':''}} @endforeach/>{{$child2->name}}
                                                     @endforeach
                                                 </ul>
                                                 </li>

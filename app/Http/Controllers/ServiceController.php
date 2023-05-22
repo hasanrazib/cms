@@ -118,8 +118,8 @@ class ServiceController extends Controller
     public function edit(Service $service)
     {
         $categories = ServiceCategory::tree(); 
-       
-        return view('backend.modules.service.edit',compact('categories','service'));
+        $service_service_categories =  DB::table('service_service_category')->where('service_id',$service->id)->get();
+        return view('backend.modules.service.edit',compact('categories','service','service_service_categories'));
     }
 
     /**
@@ -132,16 +132,7 @@ class ServiceController extends Controller
     public function update(Request $request, Service $service)
     {
 
-    
         $service->title = $request->title;
-
-        if ($request->service_category_id) {
-            foreach ($request->service_category_id as $v){
-                $service_category_id[] = $v;
-                $data->service_category_id  = implode(',', $service_category_id);
-            }
-        }
-
         $service->short_description  = $request->short_description;
         $service->description  = $request->description;
 
@@ -163,6 +154,7 @@ class ServiceController extends Controller
             $page_banner_image_url = 'upload/services/'.$name_gen;
             $service->page_banner  = $page_banner_image_url;
         }
+
         $service->status  = $request->status;
         $service->order_by  = $request->order_by;
         $service->page_title  = $request->page_title;
@@ -171,6 +163,8 @@ class ServiceController extends Controller
         $service->updated_at  = Carbon::now();
         $service->update();
 
+        $service->categories()->sync($request->service_category_id);
+        
         $notification = array(
             'message' => 'Service Updated Successfully', 
             'alert-type' => 'success'
