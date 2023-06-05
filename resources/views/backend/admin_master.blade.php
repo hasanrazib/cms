@@ -25,6 +25,10 @@
 
         <!-- Bootstrap Css -->
         <link href="{{ asset('backend/assets/css/bootstrap.min.css') }}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+        
+        <!-- Dropzone -->
+        <link href="{{ asset('backend/assets/css/dropzone.min.css') }}" rel="stylesheet" type="text/css" />
+        
         <!-- Icons Css -->
         <link href="{{ asset('backend/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
         <!-- App Css-->
@@ -88,6 +92,9 @@
         <!-- apexcharts -->
         <script src="{{ asset('backend/assets/libs/apexcharts/apexcharts.min.js') }}"></script>
 
+        <!-- dropzone -->
+        <script src="{{ asset('backend/assets/js/dropzone.min.js') }}"></script>
+       
         <!-- jquery.vectormap map -->
         <script src="{{ asset('backend/assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js') }}"></script>
         <script src="{{ asset('backend/assets/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-us-merc-en.js') }}"></script>
