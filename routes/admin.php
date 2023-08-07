@@ -6,6 +6,10 @@ use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ServiceTempGalleryImageController;
+use App\Http\Controllers\ServiceGalleryImageController;
+
+
 
 
 // Services Controller
@@ -24,3 +28,4 @@ Route::resource('services', ServiceController::class);
 Route::resource('service-categories', ServiceCategoryController::class);
 
 
+Route::post('/temp-images',[ServiceTempGalleryImageController::class,'store'])->name('temp-images.create');

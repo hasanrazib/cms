@@ -5,12 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
+use Image;
 use App\Models\User;
 use App\Models\Service;
 use App\Models\ServiceCategory;
-use Illuminate\Support\Str;
-use Image;
-use Illuminate\Support\Facades\DB;
+use App\Models\ServiceGalleryImage;
+use App\Models\ServiceTempGalleryImage;
+
 class ServiceController extends Controller
 {
     /**
@@ -45,9 +48,8 @@ class ServiceController extends Controller
      */
     public function store(Request $request)
     {
-    
 
-        $data = new Service();
+        $data = new Service;
         $data->title  = $request->title;
 
         if ($request->service_category_id) {
@@ -77,6 +79,7 @@ class ServiceController extends Controller
             $page_banner_image_url = 'upload/services/'.$name_gen;
             $data->page_banner  = $page_banner_image_url;
         }
+
         $data->status  = $request->status;
         $data->order_by  = $request->order_by;
         $data->page_title  = $request->page_title;
@@ -85,8 +88,43 @@ class ServiceController extends Controller
         $data->created_at  = Carbon::now();
         $data->save();
 
-        $data->categories()->attach($request->service_category_id);
+        // gallery images 
+        if(!empty($request->image_id)){
+            $caption = $request->caption;
+            foreach($request->image_id as $key => $imageId){
 
+                $tempImage = ServiceTempGalleryImage::find($imageId);
+                $extArray = explode('.',$tempImage->name);
+                $ext = last($extArray);
+
+                $serviceImage = new ServiceGalleryImage;
+                $serviceImage->name = 'NULL';
+                $serviceImage->service_id = $data->id;
+                $serviceImage->caption = $caption[$key];
+                $serviceImage->save();
+
+                $newImageName = $serviceImage->id.'.'.$ext;
+                $serviceImage->name = $newImageName;
+                $serviceImage->save();
+
+
+                // first thumnail 
+                $sourcePath = public_path('upload/services/temp/'.$tempImage->name);
+                $destPath = public_path('upload/services/gallery/small/'.$newImageName);
+                $img = Image::make($sourcePath);
+                $img->fit(350,300);
+                $img->save($destPath);
+
+                // second thumnail 
+                $sourcePath = public_path('upload/services/temp/'.$tempImage->name);
+                $destPath = public_path('upload/services/gallery/large/'.$newImageName);
+                $img = Image::make($sourcePath);
+                $img->resize(1200,null,function($constraint){$constraint->aspectRatio();});
+                $img->save($destPath);
+            }
+        } // gallery images
+
+        $data->categories()->attach($request->service_category_id);
     
         $notification = array(
             'message' => 'Service Created Succesfully', 
@@ -97,6 +135,8 @@ class ServiceController extends Controller
         return redirect('services')->with($notification);
         
     }
+
+
 
     /**
      * Display the specified resource.
@@ -169,6 +209,7 @@ class ServiceController extends Controller
             'message' => 'Service Updated Successfully', 
             'alert-type' => 'success'
         );
+
         return redirect('services')->with($notification);
     }
 

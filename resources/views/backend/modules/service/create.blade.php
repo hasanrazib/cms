@@ -14,8 +14,8 @@
             </div>
         </div>
         <!-- end page title -->
-        <form action="{{route('services.store')}}" method="POST" enctype="multipart/form-data">
-            @csrf
+        <form action="" name="serviceForm" id="serviceForm" method="POST" enctype="multipart/form-data">
+           
         <div class="row">
             <div class="col-lg-9 col-xl-9">
                 <div class="card">
@@ -50,7 +50,7 @@
                                             aria-labelledby="headingOne" data-bs-parent="#accordion">
                                         <div class="card-body">
                                             <div class="col-sm-12 mb-3">
-                                                <label for="example-text-input" class="col-form-label">Page Banner</label>
+                                                <label class="col-form-label">Page Banner</label>
                                                 <div class="col-sm-12">
                                                     <input name="page_banner" class="form-control" type="file"  id="page_banner">
                                                 </div>
@@ -61,13 +61,13 @@
                                                 </div>
                                             </div>
                                             <div class="col-sm-12 mb-3">
-                                                <label for="page_title" class="col-form-label">Page Title</label>
+                                                <label class="col-form-label">Page Title</label>
                                                 <div class="col-sm-7">
                                                     <input class="form-control" type="text" name="page_title">
                                                 </div>
                                             </div>
                                             <div class="col-sm-12 mb-3">
-                                                <label for="banner_text" class="col-form-label">Banner Text</label>
+                                                <label class="col-form-label">Banner Text</label>
                                                 <div class="col-sm-12">
                                                     <textarea  class="form-control" rows="3" name="banner_text"></textarea>
                                                 </div>
@@ -127,6 +127,36 @@
                             </div>
                         </div>
                         <!-- end: short description -->
+                        <!-- start: photo gallery -->
+                        <div class="excerpt">
+                            <div id="accordion" class="custom-accordion">
+                                <div class="card">
+                                    <a href="#photo_gallery" class="text-dark" data-bs-toggle="collapse"
+                                                    aria-expanded="true"
+                                                    aria-controls="collapseOne">
+                                        <div class="card-header" id="headingOne">
+                                            <h6 class="m-0">
+                                                Photo Gallery
+                                                <i class="mdi mdi-minus float-end accor-plus-icon"></i>
+                                            </h6>
+                                        </div>
+                                    </a>
+                                    <div id="photo_gallery" class="collapse"
+                                            aria-labelledby="headingOne" data-bs-parent="#accordion">
+                                        <div class="card-body">
+                                            <div id="image" class="dropzone dz-clickable">
+                                                <div class="dz-message needsclick">    
+                                                    <br>Drop files here or click to upload.<br><br>                                            
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="row" id="gallery_append"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end: photo gallery -->
                     </div>
                 </div>
             </div>
@@ -153,9 +183,9 @@
                                             <li><b>Status:</b><br>
                                             <fieldset>
                                                 <input type="radio" name="status" value="1" checked>
-                                                <label for="active">Active</label><br>
+                                                <label>Active</label><br>
                                                 <input type="radio" name="status" value="0">
-                                                <label for="Inactive">Inactive</label>
+                                                <label>Inactive</label>
                                             </fieldset>
                                             <li>Order: <input class="form-control" type="text" name="order_by"></li>
                                             <li>Publish: <strong>Immediately </strong><a href="#"  style="color:#2F84EA">Edit</a></li>
@@ -229,9 +259,60 @@
 
                 </div>
             </div>
+            
         </div>
         </form>
     </div> <!-- end:Container -->
 </div> <!-- end:: Main Content -->
 @endsection
+@section('scripts')
+<script>
+   Dropzone.autoDiscover = false;    
+    const dropzone = $("#image").dropzone({ 
+			uploadprogress: function(file, progress, bytesSent) {
+         
+    },
+      url:  "{{ route('temp-images.create') }}",
+      maxFiles: 10,
+      paramName: 'image',
+      addRemoveLinks: true,
+      acceptedFiles: "image/jpeg,image/png,image/gif",
+      headers: {
+          'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+      }, success: function(file, response){
 
+        var html = `<div class="col-xl-3">
+                        <div class="card">
+                            <img src="${response.imagePath}" alt="logo"/>
+                            <input type="text" name="caption[]" value="" class="form-control"/>
+                            <input type="hidden" name="image_id[]" value="${response.image_id}" class="form-control"/>
+                        </div>
+                    </div>`;
+        $("#gallery_append").append(html);
+        this.removeFile(file);            
+      }
+  });
+
+  $("#serviceForm").submit(function(event){
+     
+    event.preventDefault();
+        
+
+        $.ajax({
+            url:"{{ route('services.store') }}",
+            data:$(this).serializeArray(),
+            method:'post',
+            dataType: 'json',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+            },
+            success: function(response){
+               
+            } // success end
+
+        }); // ajax end
+
+    }) // submit end
+
+</script>
+@endsection
