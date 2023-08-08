@@ -88,10 +88,6 @@
         <script src="{{ asset('backend/assets/libs/simplebar/simplebar.min.js') }}"></script>
         <script src="{{ asset('backend/assets/libs/node-waves/waves.min.js') }}"></script>
 
-
-        <!-- apexcharts -->
-        <script src="{{ asset('backend/assets/libs/apexcharts/apexcharts.min.js') }}"></script>
-
         <!-- dropzone -->
         <script src="{{ asset('backend/assets/js/dropzone.min.js') }}"></script>
        
@@ -107,10 +103,8 @@
         <script src="{{ asset('backend/assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
         <script src="{{ asset('backend/assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js') }}"></script>
 
-        <script src="{{ asset('backend/assets/js/pages/dashboard.init.js') }}"></script>
-
-         <!--tinymce js-->
-         <script src="{{asset('backend/assets/libs/tinymce/tinymce.min.js')}}"></script>
+        <!--tinymce js-->
+        <script src="{{asset('backend/assets/libs/tinymce/tinymce.min.js')}}"></script>
 
          <!-- init js -->
          <script src="{{asset('backend/assets/js/pages/form-editor.init.js')}}"></script>
