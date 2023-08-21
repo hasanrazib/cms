@@ -36,7 +36,13 @@ $(document).ready(function (){
     });
 });
 
-
-
-
+// textarea issues solved 
+tinymce.init({
+    selector: '#elm1',
+    setup: function (editor) {
+        editor.on('change', function () {
+            tinymce.triggerSave();
+        });
+    },
+});
 
