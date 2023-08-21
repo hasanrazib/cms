@@ -126,13 +126,10 @@ class ServiceController extends Controller
 
         $data->categories()->attach($request->service_category_id);
     
-        $notification = array(
-            'message' => 'Service Created Succesfully', 
-            'alert-type' => 'success'
-        );
-
-
-        return redirect('services')->with($notification);
+        return response()->json([
+            'status' => 200,
+            'message' => 'Service Created Succesfully'
+        ]);
         
     }
 

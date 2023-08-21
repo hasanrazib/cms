@@ -307,7 +307,8 @@
                 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
             },
             success: function(response){
-               
+                toastr.success(response.message);
+                window.location.href = "/services"
             } // success end
 
         }); // ajax end
