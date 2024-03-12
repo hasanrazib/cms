@@ -23,9 +23,9 @@
                                     <span>Posts</span>
                                 </a>
                                 <ul class="sub-menu" aria-expanded="false">
-                                    <li><a href="{{route('view.all.posts')}}">All Posts</a></li>
-                                    <li><a href="{{route('add.post')}}">Add New</a></li>
-                                    <li><a href="{{route('view.all.categories')}}">Categories</a></li>
+                                    <li><a href="#">All Posts</a></li>
+                                    <li><a href="#">Add New</a></li>
+                                    <li><a href="#">Categories</a></li>
                                     <li><a href="#">Tags</a></li>
                                 </ul>
                             </li>
