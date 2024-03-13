@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\PostCategoryController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\ServiceCategoryController;
 use App\Http\Controllers\ModuleController;
@@ -20,10 +22,21 @@ Route::controller(ServiceController::class)->group(function () {
     Route::delete('/services/delete-all', 'deleteAll')->name('delete.all');
 });
 
+// Posts Controller
+Route::controller(PostController::class)->group(function () {
+    Route::get('/posts/trash', 'trashList')->name('trash.list');
+    Route::get('/posts/restore/{id}', 'restorePost')->name('restore.post');
+    Route::get('/posts/permanent-delete/{id}', 'pdeletePost')->name('pdelete.post');
+    Route::delete('/posts/delete-all', 'deleteAll')->name('delete.all');
+});
+
+
 Route::resource('modules', ModuleController::class);
 Route::resource('permissions', PermissionController::class);
 Route::resource('roles', RoleController::class);
 Route::resource('users', UserController::class);
+Route::resource('posts', PostController::class);
+Route::resource('post-categories', PostCategoryController::class);
 Route::resource('services', ServiceController::class);
 Route::resource('service-categories', ServiceCategoryController::class);
 
